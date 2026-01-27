@@ -44,7 +44,7 @@
   <div class="card">
     <h2>Abstract</h2>
     <p>
-      We present Split-and-Conquer, a framework for split federated learning under heterogeneous environments...
+      Split Federated Learning (SFL) enables collaborative training of large-scale models under privacy and resource constraints. However, existing SFL systems enforce the use of the same client-side layers, which prevents clients from personalizing the models to client-specific environments. Moreover, SFL suffers from the straggler problem, since client updates are performed sequentially across clients by receiving gradients from the server, so slow clients delay the updates of other clients. To address these issues, we propose a novel SFL framework, \textit{Split-and-Conquer}, that divides the entangled challenges into two subproblems and addresses them. We introduce a shared head and a replay mechanism that allow client-side models to be updated independently from server-side training while supporting client-specific personalization. By using a shared head located after the client-side layers to compute the loss locally, each client can personalize and update its model without server-side backpropagation. A replay buffer on the server side stores the intermediate activations from clients and enables robust server-side training even in the presence of stragglers. We further provide a convergence analysis and validate the effectiveness of our approach through extensive simulations across diverse tasks and model architectures.
     </p>
   </div>
 
