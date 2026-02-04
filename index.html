@@ -5,72 +5,249 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Split-and-Conquer: Client-Decoupled Split Federated Learning in Heterogeneous Environments</title>
   <style>
-  body{
-    font-family:system-ui,Arial;
-    max-width:900px;
-    margin:40px auto;
-    padding:0 16px;
-    line-height:1.6
-  }
+    :root{
+      --bg:#ffffff;
+      --text:#0f172a;
+      --muted:#475569;
+      --line: rgba(15,23,42,.12);
+      --soft:#f6f7fb;
+      --soft2:#fbfbfd;
+      --shadow: 0 10px 25px rgba(15,23,42,.08);
+      --radius: 14px;
+      --max: 980px;
+      --accent:#3b82f6;
+      --accent2:#7c5cff;
+    }
 
-  h1{
-    text-align: center;      /* 가운데 정렬 */
-    font-size: 2.8rem;      /* 제목 크게 */
-    margin-top: 0.5em;
-    margin-bottom: 0.3em;
-  }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height:1.65;
+    }
+    a{color:inherit}
 
-  h2{
-    margin-top:1.5em;
-  }
+    .wrap{max-width:var(--max); margin:46px auto 88px; padding:0 18px}
 
-  .links a{margin-right:12px}
-  .card{background:#f6f7f9;border-radius:12px;padding:16px;margin:20px 0}
-  img{max-width:100%;height:auto}
-</style>
+    /* Header (simple, paper-project-page style) */
+    header{padding-bottom:16px; border-bottom:1px solid var(--line)}
+    h1{margin:0; text-align:center; font-size:clamp(2.0rem, 3.8vw, 3.0rem); line-height:1.15; letter-spacing:-0.02em}
+    .subtitle{margin:10px 0 0; text-align:center; color:var(--muted); font-weight:700; font-size:1.05rem}
+    .authors{margin:8px 0 0; text-align:center; color:var(--muted); font-weight:600}
+    .lead{margin:16px auto 0; text-align:center; color:var(--muted); max-width: 58rem}
 
+    /* Buttons (like the reference: simple pill buttons) */
+    .btnrow{display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:18px 0 0}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:var(--soft2);
+      font-weight:800;
+      text-decoration:none;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+      box-shadow: 0 6px 16px rgba(15,23,42,.06);
+    }
+    .btn:hover{transform: translateY(-1px); box-shadow: 0 10px 25px rgba(15,23,42,.10); border-color: rgba(15,23,42,.18)}
+    .btn.primary{border-color: rgba(59,130,246,.35)}
+    .btn.secondary{border-color: rgba(124,92,255,.35)}
+
+    .icon{width:18px; height:18px; display:inline-block}
+
+    /* Content */
+    main{margin-top:28px}
+    section{margin: 0 0 34px}
+    h2{margin:0 0 10px; font-size:1.35rem; letter-spacing:-0.01em}
+    h3{margin:18px 0 8px; font-size:1.05rem}
+    p{margin:0 0 12px}
+    .muted{color:var(--muted)}
+
+    /* Figures (image + caption, like the reference page) */
+    figure{
+      margin:14px 0 0;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--soft);
+      box-shadow: var(--shadow);
+    }
+    figure .frame{background:#fff; border:1px solid rgba(15,23,42,.10); border-radius: 12px; padding:10px; overflow:auto}
+    figcaption{margin-top:10px; color:var(--muted); font-size:.95rem}
+
+    /* Callouts */
+    .callout{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(59,130,246,.08), rgba(124,92,255,.05));
+      border-radius: var(--radius);
+      padding:14px;
+    }
+
+    /* BibTeX */
+    pre{
+      margin:0;
+      padding:14px;
+      border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: var(--soft);
+      overflow:auto;
+      font-size:.95rem;
+      line-height:1.45;
+    }
+
+    /* Small footer */
+    footer{margin-top:22px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); text-align:center; font-size:.95rem}
+
+    /* Utility */
+    ul{margin:8px 0 0; padding-left:18px}
+    li{margin:6px 0}
+
+    /* Make SVG text crisp */
+    svg{max-width:100%; height:auto; display:block}
+  </style>
 </head>
 <body>
-  <h1>Split-and-Conquer: Client-Decoupled Split Federated Learning in Heterogeneous Environments</h1>
-  <p style="text-align:center;"><strong>Anonymous submission</strong></p>
+  <div class="wrap">
+    <header>
+      <h1>Split-and-Conquer</h1>
+      <div class="subtitle">Client-Decoupled Split Federated Learning in Heterogeneous Environments</div>
+      <div class="authors">Anonymous Authors</div>
+      <p class="lead">Project page for Split-and-Conquer. Use the buttons below to access the paper, code, and video.</p>
 
+      <nav class="btnrow" aria-label="Project links">
+        <a class="btn primary" href="#" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 4h10a2 2 0 0 1 2 2v14l-4-2-4 2-4-2-4 2V6a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Paper
+        </a>
+        <a class="btn secondary" href="#" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M9 19c-1.66 0-3-1.34-3-3V8c0-1.66 1.34-3 3-3h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M15 5h2a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          Code
+        </a>
+        <a class="btn" href="#" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M15 10l4.553-2.276A1 1 0 0 1 21 8.618v6.764a1 1 0 0 1-1.447.894L15 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <rect x="3" y="7" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          Video
+        </a>
+      </nav>
+    </header>
 
-  <div class="links">
-    <a href="#">Paper</a>
-    <a href="#">Code</a>
-    <a href="#">Video</a>
-  </div>
+    <main>
+      <section>
+        <h2>Abstract</h2>
+        <p class="muted">We present <strong>Split-and-Conquer</strong>, a framework for split federated learning under heterogeneous environments...</p>
+      </section>
 
-  <div class="card">
-    <h2>Abstract</h2>
-    <p>
-      Split Federated Learning (SFL) enables collaborative training of large-scale models under privacy and resource constraints. However, existing SFL systems enforce the use of the same client-side layers, which prevents clients from personalizing the models to client-specific environments. Moreover, SFL suffers from the straggler problem, since client updates are performed sequentially across clients by receiving gradients from the server, so slow clients delay the updates of other clients. To address these issues, we propose a novel SFL framework, \textit{Split-and-Conquer}, that divides the entangled challenges into two subproblems and addresses them. We introduce a shared head and a replay mechanism that allow client-side models to be updated independently from server-side training while supporting client-specific personalization. By using a shared head located after the client-side layers to compute the loss locally, each client can personalize and update its model without server-side backpropagation. A replay buffer on the server side stores the intermediate activations from clients and enables robust server-side training even in the presence of stragglers. We further provide a convergence analysis and validate the effectiveness of our approach through extensive simulations across diverse tasks and model architectures.
-    </p>
-  </div>
+      <section>
+        <h2>Why Split-and-Conquer?</h2>
+        <p class="muted">(Optional section like the reference page.) Explain the motivation in 2–3 paragraphs with one figure.</p>
+        <div class="callout">
+          <strong>Key idea:</strong> decouple clients to handle heterogeneous compute/bandwidth, while preserving privacy and accuracy.
+        </div>
+      </section>
 
-  <div class="card">
-    <h2>Method</h2>
-    <p>
-      Brief description of your method here.
-    </p>
-  </div>
+      <section>
+        <h2>Method</h2>
+        <p class="muted">Brief description of your method here. Below is an editable overview figure (SVG). Update labels to match your paper.</p>
 
-  <div class="card">
-    <h2>Experiments</h2>
-    <p>
-      Add key experimental results and figures here.
-    </p>
-  </div>
+        <figure>
+          <div class="frame">
+            <svg viewBox="0 0 980 260" role="img" aria-label="Split-and-Conquer overview">
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="rgba(59,130,246,.55)"/>
+                  <stop offset="1" stop-color="rgba(124,92,255,.45)"/>
+                </linearGradient>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+                  <path d="M0,0 L10,5 L0,10 z" fill="rgba(15,23,42,.75)"/>
+                </marker>
+              </defs>
 
-  <div class="card">
-    <h2>BibTeX</h2>
-    <pre>
-@inproceedings{anonymous2026split,
+              <!-- Client boxes -->
+              <g>
+                <rect x="26" y="38" width="250" height="78" rx="16" fill="rgba(248,250,252,1)" stroke="rgba(15,23,42,.14)"/>
+                <rect x="26" y="144" width="250" height="78" rx="16" fill="rgba(248,250,252,1)" stroke="rgba(15,23,42,.14)"/>
+                <text x="52" y="70" fill="rgba(15,23,42,.95)" font-size="16" font-family="system-ui" font-weight="800">Client A (weak device)</text>
+                <text x="52" y="95" fill="rgba(71,85,105,.95)" font-size="13" font-family="system-ui">Local front / early layers</text>
+                <text x="52" y="176" fill="rgba(15,23,42,.95)" font-size="16" font-family="system-ui" font-weight="800">Client B (strong device)</text>
+                <text x="52" y="201" fill="rgba(71,85,105,.95)" font-size="13" font-family="system-ui">Local front / early layers</text>
+              </g>
+
+              <!-- Split boundary -->
+              <g>
+                <line x1="306" y1="32" x2="306" y2="228" stroke="rgba(15,23,42,.18)" stroke-dasharray="6 8"/>
+                <text x="287" y="26" fill="rgba(71,85,105,.95)" font-size="12" font-family="system-ui">split</text>
+              </g>
+
+              <!-- Server box -->
+              <g>
+                <rect x="380" y="58" width="574" height="144" rx="18" fill="rgba(248,250,252,1)" stroke="rgba(15,23,42,.14)"/>
+                <rect x="404" y="86" width="210" height="92" rx="16" fill="rgba(255,255,255,1)" stroke="rgba(15,23,42,.12)"/>
+                <rect x="632" y="86" width="302" height="92" rx="16" fill="url(#g1)" opacity=".95" stroke="rgba(15,23,42,.10)"/>
+                <text x="404" y="78" fill="rgba(71,85,105,.95)" font-size="12" font-family="system-ui">Server</text>
+                <text x="425" y="125" fill="rgba(15,23,42,.95)" font-size="14" font-family="system-ui" font-weight="800">Decoupler</text>
+                <text x="425" y="148" fill="rgba(71,85,105,.95)" font-size="12" font-family="system-ui">Align / route activations</text>
+                <text x="425" y="168" fill="rgba(71,85,105,.95)" font-size="12" font-family="system-ui">Handle heterogeneity</text>
+
+                <text x="653" y="125" fill="rgba(255,255,255,.98)" font-size="14" font-family="system-ui" font-weight="900">Conquer (Aggregator)</text>
+                <text x="653" y="148" fill="rgba(255,255,255,.92)" font-size="12" font-family="system-ui">Update shared back / head</text>
+                <text x="653" y="168" fill="rgba(255,255,255,.92)" font-size="12" font-family="system-ui">Send compact signals back</text>
+              </g>
+
+              <!-- Arrows -->
+              <g>
+                <path d="M276 77 C 310 77, 330 105, 380 112" fill="none" stroke="rgba(15,23,42,.75)" stroke-width="2" marker-end="url(#arrow)"/>
+                <path d="M276 183 C 310 183, 330 155, 380 148" fill="none" stroke="rgba(15,23,42,.75)" stroke-width="2" marker-end="url(#arrow)"/>
+                <path d="M380 132 C 340 132, 310 132, 276 132" fill="none" stroke="rgba(71,85,105,.55)" stroke-width="2" marker-end="url(#arrow)"/>
+              </g>
+            </svg>
+          </div>
+          <figcaption><strong>Figure 1.</strong> Overview of Split-and-Conquer. (Edit caption to match your paper.)</figcaption>
+        </figure>
+
+        <h3>Method details</h3>
+        <ul class="muted">
+          <li>Describe the split point policy / client grouping</li>
+          <li>Describe decoupling mechanism + server-side module</li>
+          <li>Describe training/aggregation objective and what is communicated</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Experiments</h2>
+        <p class="muted">Add 1–2 key figures (accuracy/latency/comm) with short captions, similar to the reference page.</p>
+
+        <figure>
+          <div class="frame" style="text-align:center; padding:24px">
+            <span class="muted">(Place your result figure here: &lt;img src=&quot;...&quot; alt=&quot;...&quot;&gt;)</span>
+          </div>
+          <figcaption><strong>Figure 2.</strong> Key experimental result. (Replace with your actual plot.)</figcaption>
+        </figure>
+      </section>
+
+      <section>
+        <h2>BibTeX</h2>
+        <pre>@inproceedings{anonymous2026split,
   title={Split-and-Conquer},
   author={Anonymous Authors},
   year={2026}
-}
-    </pre>
+}</pre>
+      </section>
+
+      <footer>
+        <div>White-theme project page inspired by minimal academic project pages.</div>
+      </footer>
+    </main>
   </div>
 </body>
 </html>
