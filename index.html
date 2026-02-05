@@ -108,7 +108,28 @@
 
     /* Make SVG text crisp */
     svg{max-width:100%; height:auto; display:block}
-  </style>
+    /* Section separator */
+    .sep{border:none; border-top:1px solid var(--line); margin:42px 0}
+
+    /* Two-column layout for large figures */
+    .twocol{
+      display:grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap:22px;
+      align-items:start;
+    }
+    @media (max-width: 900px){
+      .twocol{grid-template-columns:1fr}
+    }
+
+    /* Paper-inspired accent colors */
+    :root{ --accent:#2563eb; --accent2:#7c3aed; }
+    h2{color:#1e3a8a}
+    .btn.primary{border-color: rgba(37,99,235,.35)}
+    .btn.secondary{border-color: rgba(124,58,237,.35)}
+    .callout{background: linear-gradient(180deg, rgba(37,99,235,.08), rgba(124,58,237,.05)); border-color: rgba(37,99,235,.18)}
+
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -116,7 +137,7 @@
       <h1>Split-and-Conquer</h1>
       <div class="subtitle">Client-Decoupled Split Federated Learning in Heterogeneous Environments</div>
       <div class="authors">Anonymous Authors</div>
-      <p class="lead">Project page for Split-and-Conquer. Use the buttons below to access the paper, code, and video.</p>
+      <p class="lead">Project page for Split-and-Conquer. Use the buttons below to access the paper and code.</p>
 
       <nav class="btnrow" aria-label="Project links">
         <a class="btn primary" href="#" target="_blank" rel="noopener">
@@ -132,79 +153,159 @@
           </svg>
           Code
         </a>
-        <a class="btn" href="#" target="_blank" rel="noopener">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M15 10l4.553-2.276A1 1 0 0 1 21 8.618v6.764a1 1 0 0 1-1.447.894L15 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-            <rect x="3" y="7" width="12" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-          </svg>
-          Video
-        </a>
+        
       </nav>
     </header>
 
     <main>
-      <section>
-        <h2>Abstract</h2>
-        <p class="muted">We present <strong>Split-and-Conquer</strong>, a framework for split federated learning under heterogeneous environments...</p>
-      </section>
-
-      <section>
-        <h2>Why Split-and-Conquer?</h2>
-        <p class="muted">(Optional section like the reference page.) Explain the motivation in 2–3 paragraphs with one figure.</p>
-        <div class="callout">
-          <strong>Key idea:</strong> decouple clients to handle heterogeneous compute/bandwidth, while preserving privacy and accuracy.
+      <!-- ===== TL;DR / Overview ===== -->
+      <section class="section">
+        <h2>Overview</h2>
+        <div class="twocol">
+          <div>
+            <p class="muted">
+              <strong>Split-and-Conquer</strong> is a new Split Federated Learning (SFL) framework designed for <em>heterogeneous</em> environments.
+              It removes the strict client–server backpropagation dependency so clients can personalize locally and the server can train robustly under stragglers.
+            </p>
+            <div class="callout">
+              <ul class="muted" style="margin:0;">
+                <li><strong>Client personalization:</strong> client-side layers are fully personalized; only a lightweight <em>shared head</em> is federated.</li>
+                <li><strong>Client decoupling:</strong> clients compute loss & update without waiting for server gradients.</li>
+                <li><strong>Straggler robustness:</strong> server trains asynchronously using a replay buffer of client embeddings.</li>
+              </ul>
+            </div>
+          </div>
+          <figure style="margin-top:0">
+            <div class="frame">
+              <!-- Upload Overall Workflow (paper Fig.2) to: assets/figures/figure2.pdf -->
+              <img src="assets/figures/figure2.pdf" alt="Overall workflow of Split-and-Conquer" />
+            </div>
+            <figcaption><strong>Figure 1.</strong> Overall workflow of Split-and-Conquer.</figcaption>
+          </figure>
         </div>
       </section>
 
+      <hr class="sep" />
+
+      <!-- ===== Abstract ===== -->
       <section>
-        <h2>Method</h2>
-        <p class="muted">Brief description of your method here. Below is an editable overview figure (SVG). Update labels to match your paper.</p>
+        <h2>Abstract</h2>
+        <p class="muted">
+          Split Federated Learning (SFL) enables collaborative training of large models under privacy and resource constraints,
+          but existing methods tightly couple client updates with server-side backpropagation.
+          This coupling prevents client-specific personalization under heterogeneous environments and leads to severe training delays with stragglers.
+          Split-and-Conquer decouples client-side personalization from server-side representation learning with a lightweight shared head (federated component)
+          and a server-side replay buffer for asynchronous, straggler-robust server training.
+        </p>
+      </section>
 
-        <figure>
-          <div class="frame">
-            <img
-              src="overview.pdf"
-              alt="Overview of Split-and-Conquer"
-              style="max-width:100%; height:auto;"
-            />
-          </div>
-          <figcaption>
-            <strong>Figure 1.</strong> Overview of Split-and-Conquer.
-          </figcaption>
-        </figure>
+      <hr class="sep" />
 
-
-        <h3>Method details</h3>
+      <!-- ===== Motivation ===== -->
+      <section>
+        <h2>Motivation</h2>
+        <p class="muted">
+          Existing SFL methods suffer from two practical bottlenecks in real deployments:
+        </p>
         <ul class="muted">
-          <li>Describe the split point policy / client grouping</li>
-          <li>Describe decoupling mechanism + server-side module</li>
-          <li>Describe training/aggregation objective and what is communicated</li>
+          <li><strong>Weak personalization:</strong> federated aggregation on client-side layers enforces shared representations, hurting performance under non-IID data and heterogeneous devices.</li>
+          <li><strong>Straggler delays:</strong> clients must wait for server-side backpropagation, so slow clients delay end-to-end progress.</li>
+        </ul>
+        <p class="muted" style="margin-top:10px;">
+          The core question: <strong>Can we redesign SFL to enable client-specific personalization and straggler-robust training efficiency at the same time?</strong>
+        </p>
+      </section>
+
+      <hr class="sep" />
+
+      <!-- ===== Method ===== -->
+      <section>
+        <h2>Method: Split-and-Conquer</h2>
+        <div class="twocol">
+          <div>
+            <p class="muted">
+              We split training into two parallel processes:
+              (1) <strong>client-side personalization</strong> (fully local updates) and
+              (2) <strong>server-side representation learning</strong> (asynchronous updates using replay).
+              The only federated component is a <strong>lightweight shared head</strong>.
+            </p>
+
+            <h3>What’s new?</h3>
+            <ul class="muted">
+              <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
+              <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
+              <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
+            </ul>
+          </div>
+
+          <figure style="margin-top:0">
+            <div class="frame">
+              <!-- Upload Figure 1 (accuracy/efficiency teaser from paper) to: assets/figures/figure1.png -->
+              <img src="assets/figures/figure1.png" alt="Accuracy and training-time efficiency under heterogeneity and stragglers" />
+            </div>
+            <figcaption><strong>Figure 2.</strong> Accuracy under homogeneous vs. heterogeneous environments and training-time efficiency under stragglers.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <hr class="sep" />
+
+      
+        <ul class="muted">
+          <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
+          <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
+          <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
         </ul>
       </section>
 
+      <hr class="sep" />
+
+      <!-- ===== Results ===== -->
       <section>
-        <h2>Experiments</h2>
-        <p class="muted">Add 1–2 key figures (accuracy/latency/comm) with short captions, similar to the reference page.</p>
+        <h2>Results</h2>
+        <p class="muted">
+          Across diverse vision and language tasks and multiple heterogeneity settings, Split-and-Conquer improves both <strong>accuracy</strong> and <strong>training efficiency</strong>.
+          Below are the key headline plots (replace images with those from the paper).
+        </p>
 
         <figure>
-          <div class="frame" style="text-align:center; padding:24px">
-            <span class="muted">(Place your result figure here: &lt;img src=&quot;...&quot; alt=&quot;...&quot;&gt;)</span>
+          <div class="frame">
+            <!-- Upload Figure 3 image to: assets/figures/figure3.pdf -->
+            <img src="assets/figures/figure3.pdf" alt="Training time efficiency under stragglers" />
           </div>
-          <figcaption><strong>Figure 2.</strong> Key experimental result. (Replace with your actual plot.)</figcaption>
+          <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency on SST-5: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
         </figure>
+
+        <figure>
+          <div class="frame">
+            <!-- Upload Figure 4 image to: assets/figures/figure4.png -->
+            <img src="assets/figures/figure4.png" alt="Ablation studies" />
+          </div>
+          <figcaption><strong>Figure 4.</strong> Ablations on SST-5: (a) server capacity, (b) replay memory size, (c) freezing shared head for compatibility.</figcaption>
+        </figure>
+
+        <h3>Quick takeaways</h3>
+        <ul class="muted">
+          <li><strong>Personalization under data heterogeneity:</strong> strong gains over prior SFL baselines when data is highly non-IID.</li>
+          <li><strong>Robust to system heterogeneity:</strong> near-constant round time even when many clients are stragglers.</li>
+          <li><strong>Replay matters:</strong> replay buffer stabilizes server learning under partial participation.</li>
+        </ul>
       </section>
 
+      <!-- ===== BibTeX ===== -->
+      <!--
       <section>
         <h2>BibTeX</h2>
         <pre>@inproceedings{anonymous2026split,
-  title={Split-and-Conquer},
+  title={Split-and-Conquer: Client-Decoupled Split Federated Learning in Heterogeneous Environments},
   author={Anonymous Authors},
   year={2026}
 }</pre>
       </section>
+      -->
 
       <footer>
-        <div>White-theme project page inspired by minimal academic project pages.</div>
+        <div>Tip: place all images under <code>assets/figures/</code> so links work on GitHub Pages.</div>
       </footer>
     </main>
   </div>
