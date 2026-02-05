@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Split-and-Conquer: Client-Decoupled Split Federated Learning in Heterogeneous Environments</title>
   <style>
+    /* Ensure identical font rendering across Canvas & GitHub Pages */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
     :root{
       --bg:#ffffff;
       --text:#0f172a;
@@ -27,7 +29,7 @@
       margin:0;
       background:var(--bg);
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
       line-height:1.65;
     }
     a{color:inherit}
@@ -44,11 +46,7 @@
       letter-spacing:-0.02em;
       font-weight:900;
     }
-    h1 .brand{color:var(--teal)}
-    .subtitle{margin:10px 0 0; text-align:center; color:var(--muted); font-weight:700; font-size:1.05rem}
-    .authors{margin:8px 0 0; text-align:center; color:var(--muted); font-weight:600}
-    .lead{margin:16px auto 0; text-align:center; color:var(--muted); max-width: 58rem}
-
+    h1 .brand{color:var(--teal)}    .authors{margin:8px 0 0; text-align:center; color:var(--muted); font-weight:600}
     /* Buttons */
     .btnrow{display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:18px 0 0}
     .btn{
@@ -65,8 +63,8 @@
       box-shadow: 0 6px 16px rgba(15,23,42,.06);
     }
     .btn:hover{transform: translateY(-1px); box-shadow: 0 10px 25px rgba(15,23,42,.10); border-color: rgba(15,23,42,.18)}
-    .btn.primary{border-color: rgba(37,99,235,.35)}
-    .btn.secondary{border-color: rgba(124,58,237,.35)}
+    .btn.primary{border-color: rgba(0,127,143,.35)}
+    .btn.secondary{border-color: rgba(0,128,0,.35)}
     .icon{width:18px; height:18px; display:inline-block}
 
     /* Content */
@@ -120,19 +118,19 @@
 
     /* Unified figure sizing */
     .side-figure{
-      max-width:560px;    
+      max-width:560px;     /* requested */
       margin-left:auto;
       margin-right:auto;
     }
 
     /* Overall workflow: about half-size and centered */
     .workflow-figure{
-      max-width:1000px;     
+      max-width:560px;     /* keep consistent container */
       margin-left:auto;
       margin-right:auto;
     }
     .workflow-figure img{
-      width:100%;           /* ~half size within the figure frame */
+      width:50%;           /* ~half size within the figure frame */
       margin-left:auto;
       margin-right:auto;
     }
@@ -156,9 +154,6 @@
       font-size:.95rem;
       line-height:1.45;
     }
-
-    footer{margin-top:22px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); text-align:center; font-size:.95rem}
-
     ul{margin:8px 0 0; padding-left:18px}
     li{margin:6px 0}
 
@@ -192,7 +187,7 @@
           </svg>
           Paper
         </a>
-        <a class="btn secondary" href="https://anonymous.4open.science/r/Split-and-Conquer_llamafactory-E023/README.md" target="_blank" rel="noopener">
+        <a class="btn secondary" href="#" target="_blank" rel="noopener">
           <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path d="M9 19c-1.66 0-3-1.34-3-3V8c0-1.66 1.34-3 3-3h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
             <path d="M15 5h2a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
