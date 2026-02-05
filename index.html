@@ -87,23 +87,20 @@
     figure .frame{background:#fff; border:1px solid rgba(15,23,42,.10); border-radius: 12px; padding:10px; overflow:auto}
     figcaption{margin-top:10px; color:var(--muted); font-size:.95rem}
 
-    /* PDF embeds */
-    .pdf{
-      width:100%;
-      height:560px;
-      border:0;
+    /* Show PDF figures as images (recommended for project pages)
+       Convert PDF -> PNG and upload to the paths referenced in <img src="..."> below. */
+    
+    /* Thumbnail-style figure (used for smaller side figures) */
+    .thumb-figure{padding:10px}
+    .thumb-figure .frame{padding:8px}
+    .thumb-figure img{
       display:block;
-      border-radius: 10px;
+      width:50%;            /* ~2.5x bigger than previous 20% */
+      min-width:320px;
+      max-width:450px;
+      height:auto;
+      margin-left:auto;
     }
-    @media (max-width: 700px){
-      .pdf{height:420px}
-    }
-    .pdf-fallback{margin-top:10px; font-size:.95rem}
-
-    /* Small figure (thumbnail-style) */
-    .mini-figure{padding:10px}
-    .mini-figure .frame{padding:8px}
-    .mini-figure img{display:block; width:20%; min-width:140px; max-width:180px; height:auto; margin-left:auto}
 
     /* Callouts */
     .callout{
@@ -203,9 +200,8 @@
         <figure>
           <div class="frame">
             <!-- Upload Overall Workflow to: assets/figures/figure2.pdf -->
-            <object class="pdf" data="assets/figures/figure2.pdf" type="application/pdf">
-              <p class="pdf-fallback muted">Your browser can’t display embedded PDFs. <a href="assets/figures/figure2.pdf" target="_blank" rel="noopener">Open Figure 1 (PDF)</a>.</p>
-            </object>
+            <!-- Convert paper PDF figure to PNG and upload to: assets/figures/figure2.png -->
+            <img src="assets/figures/figure2.png" alt="Overall workflow of Split-and-Conquer" />
           </div>
           <figcaption><strong>Figure 1.</strong> Overall workflow of Split-and-Conquer.</figcaption>
         </figure>
@@ -245,7 +241,7 @@
           </div>
 
           <!-- Small thumbnail on the right (Figure 2 preview) -->
-          <figure class="mini-figure" style="margin-top:0">
+          <figure class="thumb-figure" style="margin-top:0">
             <div class="frame">
               <!-- Upload teaser figure (accuracy/efficiency) to: assets/figures/figure1.png -->
               <img src="assets/figures/figure1.png" alt="Accuracy and training-time efficiency teaser" />
@@ -291,34 +287,57 @@
       <section>
         <h2>Results</h2>
         <p class="muted">
-          Across diverse vision and language tasks and multiple heterogeneity settings, Split-and-Conquer improves both <strong>accuracy</strong> and <strong>training efficiency</strong>.
-          Below are the key headline plots (replace images with those from the paper).
+          Split-and-Conquer delivers <strong>better accuracy under heterogeneity</strong> while improving <strong>end-to-end training efficiency</strong> under stragglers.
+          Below are two headline results (add the exact numbers from the paper if you want them visible on the page).
         </p>
 
-        <figure>
-          <div class="frame">
-            <!-- Upload Figure 3 (PDF) to: assets/figures/figure3.pdf -->
-            <object class="pdf" data="assets/figures/figure3.pdf" type="application/pdf">
-              <p class="pdf-fallback muted">Your browser can’t display embedded PDFs. <a href="assets/figures/figure3.pdf" target="_blank" rel="noopener">Open Figure 3 (PDF)</a>.</p>
-            </object>
+        <!-- Result 1: Figure 3 (text left, figure right) -->
+        <div class="twocol" style="margin-top:14px">
+          <div>
+            <h3>Straggler-robust training efficiency</h3>
+            <p class="muted">
+              As the straggler ratio increases, conventional split FL approaches suffer large slowdowns because they require synchronized client–server backpropagation.
+              Split-and-Conquer decouples the critical path, keeping round time stable and improving normalized training-time efficiency.
+            </p>
+            <ul class="muted">
+              <li><strong>Metric:</strong> end-to-end round time &amp; normalized training-time efficiency</li>
+              <li><strong>Setting:</strong> varying straggler ratio (e.g., 0–50%)</li>
+              <li><strong>Takeaway:</strong> robust efficiency even with many slow clients</li>
+            </ul>
           </div>
-          <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency on SST-5: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
-        </figure>
 
-        <figure>
-          <div class="frame">
-            <!-- Upload Figure 4 image to: assets/figures/figure4.png -->
-            <img src="assets/figures/figure4.png" alt="Ablation studies" />
+          <figure style="margin-top:0">
+            <div class="frame">
+              <!-- Convert paper PDF figure to PNG and upload to: assets/figures/figure3.png -->
+              <img src="assets/figures/figure3.png" alt="Training time efficiency under stragglers" />
+            </div>
+            <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency on SST-5: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
+          </figure>
+        </div>
+
+        <!-- Result 2: Figure 4 (text left, figure right) -->
+        <div class="twocol" style="margin-top:18px">
+          <div>
+            <h3>Ablations: why it works</h3>
+            <p class="muted">
+              We ablate three components to show what drives performance and stability:
+              server capacity, replay memory size, and the compatibility step (freezing the shared head) that prevents mismatch during client personalization.
+            </p>
+            <ul class="muted">
+              <li><strong>Server capacity:</strong> larger server models improve representation learning</li>
+              <li><strong>Replay memory:</strong> more replay stabilizes learning under partial participation</li>
+              <li><strong>Compatibility step:</strong> freezing the aggregated head improves robustness</li>
+            </ul>
           </div>
-          <figcaption><strong>Figure 4.</strong> Ablations on SST-5: (a) server capacity, (b) replay memory size, (c) freezing shared head for compatibility.</figcaption>
-        </figure>
 
-        <h3>Quick takeaways</h3>
-        <ul class="muted">
-          <li><strong>Personalization under data heterogeneity:</strong> strong gains over prior SFL baselines when data is highly non-IID.</li>
-          <li><strong>Robust to system heterogeneity:</strong> near-constant round time even when many clients are stragglers.</li>
-          <li><strong>Replay matters:</strong> replay buffer stabilizes server learning under partial participation.</li>
-        </ul>
+          <figure class="thumb-figure" style="margin-top:0">
+            <div class="frame">
+              <!-- Upload Figure 4 image to: assets/figures/figure4.png -->
+              <img src="assets/figures/figure4.png" alt="Ablation studies" />
+            </div>
+            <figcaption><strong>Figure 4.</strong> Ablations on SST-5: (a) server capacity, (b) replay memory size, (c) freezing shared head for compatibility.</figcaption>
+          </figure>
+        </div>
       </section>
 
       <!-- ===== BibTeX ===== -->
