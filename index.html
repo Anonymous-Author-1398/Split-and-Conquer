@@ -76,8 +76,34 @@
       background: var(--soft);
       box-shadow: var(--shadow);
     }
+    figure{
+      margin:14px 0 0;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--soft);
+      box-shadow: var(--shadow);
+    }
     figure .frame{background:#fff; border:1px solid rgba(15,23,42,.10); border-radius: 12px; padding:10px; overflow:auto}
     figcaption{margin-top:10px; color:var(--muted); font-size:.95rem}
+
+    /* PDF embeds */
+    .pdf{
+      width:100%;
+      height:560px;
+      border:0;
+      display:block;
+      border-radius: 10px;
+    }
+    @media (max-width: 700px){
+      .pdf{height:420px}
+    }
+    .pdf-fallback{margin-top:10px; font-size:.95rem}
+
+    /* Small figure (thumbnail-style) */
+    .mini-figure{padding:10px}
+    .mini-figure .frame{padding:8px}
+    .mini-figure img{display:block; width:20%; min-width:140px; max-width:180px; height:auto; margin-left:auto}
 
     /* Callouts */
     .callout{
@@ -161,28 +187,28 @@
       <!-- ===== TL;DR / Overview ===== -->
       <section class="section">
         <h2>Overview</h2>
-        <div class="twocol">
-          <div>
-            <p class="muted">
-              <strong>Split-and-Conquer</strong> is a new Split Federated Learning (SFL) framework designed for <em>heterogeneous</em> environments.
-              It removes the strict client–server backpropagation dependency so clients can personalize locally and the server can train robustly under stragglers.
-            </p>
-            <div class="callout">
-              <ul class="muted" style="margin:0;">
-                <li><strong>Client personalization:</strong> client-side layers are fully personalized; only a lightweight <em>shared head</em> is federated.</li>
-                <li><strong>Client decoupling:</strong> clients compute loss & update without waiting for server gradients.</li>
-                <li><strong>Straggler robustness:</strong> server trains asynchronously using a replay buffer of client embeddings.</li>
-              </ul>
-            </div>
-          </div>
-          <figure style="margin-top:0">
-            <div class="frame">
-              <!-- Upload Overall Workflow (paper Fig.2) to: assets/figures/figure2.pdf -->
-              <img src="assets/figures/figure2.pdf" alt="Overall workflow of Split-and-Conquer" />
-            </div>
-            <figcaption><strong>Figure 1.</strong> Overall workflow of Split-and-Conquer.</figcaption>
-          </figure>
+        <p class="muted">
+          <strong>Split-and-Conquer</strong> is a new Split Federated Learning (SFL) framework designed for <em>heterogeneous</em> environments.
+          It removes the strict client–server backpropagation dependency so clients can personalize locally and the server can train robustly under stragglers.
+        </p>
+        <div class="callout">
+          <ul class="muted" style="margin:0;">
+            <li><strong>Client personalization:</strong> client-side layers are fully personalized; only a lightweight <em>shared head</em> is federated.</li>
+            <li><strong>Client decoupling:</strong> clients compute loss &amp; update without waiting for server gradients.</li>
+            <li><strong>Straggler robustness:</strong> server trains asynchronously using a replay buffer of client embeddings.</li>
+          </ul>
         </div>
+
+        <!-- Full-width PDF (Figure 1) -->
+        <figure>
+          <div class="frame">
+            <!-- Upload Overall Workflow to: assets/figures/figure2.pdf -->
+            <object class="pdf" data="assets/figures/figure2.pdf" type="application/pdf">
+              <p class="pdf-fallback muted">Your browser can’t display embedded PDFs. <a href="assets/figures/figure2.pdf" target="_blank" rel="noopener">Open Figure 1 (PDF)</a>.</p>
+            </object>
+          </div>
+          <figcaption><strong>Figure 1.</strong> Overall workflow of Split-and-Conquer.</figcaption>
+        </figure>
       </section>
 
       <hr class="sep" />
@@ -204,16 +230,29 @@
       <!-- ===== Motivation ===== -->
       <section>
         <h2>Motivation</h2>
-        <p class="muted">
-          Existing SFL methods suffer from two practical bottlenecks in real deployments:
-        </p>
-        <ul class="muted">
-          <li><strong>Weak personalization:</strong> federated aggregation on client-side layers enforces shared representations, hurting performance under non-IID data and heterogeneous devices.</li>
-          <li><strong>Straggler delays:</strong> clients must wait for server-side backpropagation, so slow clients delay end-to-end progress.</li>
-        </ul>
-        <p class="muted" style="margin-top:10px;">
-          The core question: <strong>Can we redesign SFL to enable client-specific personalization and straggler-robust training efficiency at the same time?</strong>
-        </p>
+        <div class="twocol">
+          <div>
+            <p class="muted">
+              Existing SFL methods suffer from two practical bottlenecks in real deployments:
+            </p>
+            <ul class="muted">
+              <li><strong>Weak personalization:</strong> federated aggregation on client-side layers enforces shared representations, hurting performance under non-IID data and heterogeneous devices.</li>
+              <li><strong>Straggler delays:</strong> clients must wait for server-side backpropagation, so slow clients delay end-to-end progress.</li>
+            </ul>
+            <p class="muted" style="margin-top:10px;">
+              The core question: <strong>Can we redesign SFL to enable client-specific personalization and straggler-robust training efficiency at the same time?</strong>
+            </p>
+          </div>
+
+          <!-- Small thumbnail on the right (Figure 2 preview) -->
+          <figure class="mini-figure" style="margin-top:0">
+            <div class="frame">
+              <!-- Upload teaser figure (accuracy/efficiency) to: assets/figures/figure1.png -->
+              <img src="assets/figures/figure1.png" alt="Accuracy and training-time efficiency teaser" />
+            </div>
+            <figcaption><strong>Figure 2.</strong> Accuracy and training-time efficiency teaser.</figcaption>
+          </figure>
+        </div>
       </section>
 
       <hr class="sep" />
@@ -221,31 +260,19 @@
       <!-- ===== Method ===== -->
       <section>
         <h2>Method: Split-and-Conquer</h2>
-        <div class="twocol">
-          <div>
-            <p class="muted">
-              We split training into two parallel processes:
-              (1) <strong>client-side personalization</strong> (fully local updates) and
-              (2) <strong>server-side representation learning</strong> (asynchronous updates using replay).
-              The only federated component is a <strong>lightweight shared head</strong>.
-            </p>
+        <p class="muted">
+          We split training into two parallel processes:
+          (1) <strong>client-side personalization</strong> (fully local updates) and
+          (2) <strong>server-side representation learning</strong> (asynchronous updates using replay).
+          The only federated component is a <strong>lightweight shared head</strong>.
+        </p>
 
-            <h3>What’s new?</h3>
-            <ul class="muted">
-              <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
-              <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
-              <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
-            </ul>
-          </div>
-
-          <figure style="margin-top:0">
-            <div class="frame">
-              <!-- Upload Figure 1 (accuracy/efficiency teaser from paper) to: assets/figures/figure1.png -->
-              <img src="assets/figures/figure1.png" alt="Accuracy and training-time efficiency under heterogeneity and stragglers" />
-            </div>
-            <figcaption><strong>Figure 2.</strong> Accuracy under homogeneous vs. heterogeneous environments and training-time efficiency under stragglers.</figcaption>
-          </figure>
-        </div>
+        <h3>What’s new?</h3>
+        <ul class="muted">
+          <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
+          <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
+          <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
+        </ul>
       </section>
 
       <hr class="sep" />
@@ -270,8 +297,10 @@
 
         <figure>
           <div class="frame">
-            <!-- Upload Figure 3 image to: assets/figures/figure3.pdf -->
-            <img src="assets/figures/figure3.pdf" alt="Training time efficiency under stragglers" />
+            <!-- Upload Figure 3 (PDF) to: assets/figures/figure3.pdf -->
+            <object class="pdf" data="assets/figures/figure3.pdf" type="application/pdf">
+              <p class="pdf-fallback muted">Your browser can’t display embedded PDFs. <a href="assets/figures/figure3.pdf" target="_blank" rel="noopener">Open Figure 3 (PDF)</a>.</p>
+            </object>
           </div>
           <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency on SST-5: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
         </figure>
