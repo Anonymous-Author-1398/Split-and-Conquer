@@ -15,8 +15,11 @@
       --shadow: 0 10px 25px rgba(15,23,42,.08);
       --radius: 14px;
       --max: 980px;
-      --accent:#3b82f6;
-      --accent2:#7c5cff;
+
+      /* Paper-inspired accent colors */
+      --accent:#2563eb;
+      --accent2:#7c3aed;
+      --accentTitle:#1e3a8a;
     }
 
     *{box-sizing:border-box}
@@ -31,14 +34,14 @@
 
     .wrap{max-width:var(--max); margin:46px auto 88px; padding:0 18px}
 
-    /* Header (simple, paper-project-page style) */
+    /* Header */
     header{padding-bottom:16px; border-bottom:1px solid var(--line)}
     h1{margin:0; text-align:center; font-size:clamp(2.0rem, 3.8vw, 3.0rem); line-height:1.15; letter-spacing:-0.02em}
     .subtitle{margin:10px 0 0; text-align:center; color:var(--muted); font-weight:700; font-size:1.05rem}
     .authors{margin:8px 0 0; text-align:center; color:var(--muted); font-weight:600}
     .lead{margin:16px auto 0; text-align:center; color:var(--muted); max-width: 58rem}
 
-    /* Buttons (like the reference: simple pill buttons) */
+    /* Buttons */
     .btnrow{display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:18px 0 0}
     .btn{
       display:inline-flex;
@@ -54,58 +57,65 @@
       box-shadow: 0 6px 16px rgba(15,23,42,.06);
     }
     .btn:hover{transform: translateY(-1px); box-shadow: 0 10px 25px rgba(15,23,42,.10); border-color: rgba(15,23,42,.18)}
-    .btn.primary{border-color: rgba(59,130,246,.35)}
-    .btn.secondary{border-color: rgba(124,92,255,.35)}
-
+    .btn.primary{border-color: rgba(37,99,235,.35)}
+    .btn.secondary{border-color: rgba(124,58,237,.35)}
     .icon{width:18px; height:18px; display:inline-block}
 
     /* Content */
     main{margin-top:28px}
     section{margin: 0 0 34px}
-    h2{margin:0 0 10px; font-size:1.35rem; letter-spacing:-0.01em}
+    h2{margin:0 0 10px; font-size:1.35rem; letter-spacing:-0.01em; color:var(--accentTitle)}
     h3{margin:18px 0 8px; font-size:1.05rem}
     p{margin:0 0 12px}
     .muted{color:var(--muted)}
 
-    /* Figures (image + caption, like the reference page) */
+    /* Figures */
     figure{
       margin:14px 0 0;
-      padding:14px;
+      padding:12px;
       border:1px solid var(--line);
       border-radius: var(--radius);
       background: var(--soft);
       box-shadow: var(--shadow);
     }
-    figure{
-      margin:14px 0 0;
-      padding:14px;
-      border:1px solid var(--line);
-      border-radius: var(--radius);
-      background: var(--soft);
-      box-shadow: var(--shadow);
+    figure .frame{
+      background:#fff;
+      border:1px solid rgba(15,23,42,.10);
+      border-radius: 12px;
+      padding:0;              /* remove extra left/right whitespace */
+      overflow:hidden;
     }
-    figure .frame{background:#fff; border:1px solid rgba(15,23,42,.10); border-radius: 12px; padding:10px; overflow:auto}
+    figure img{
+      display:block;
+      width:100%;
+      height:auto;
+      margin:0;
+    }
     figcaption{margin-top:10px; color:var(--muted); font-size:.95rem}
 
-    /* Show PDF figures as images (recommended for project pages)
-       Convert PDF -> PNG and upload to the paths referenced in <img src="..."> below. */
-    
-    /* Thumbnail-style figure (used for smaller side figures) */
-    .thumb-figure{padding:10px}
-    .thumb-figure .frame{padding:8px}
-    .thumb-figure img{
-      display:block;
-      width:60%;            
-      min-width:320px;
-      max-width:450px;
-      height:auto;
+    /* Unified figure sizing */
+    .side-figure{
+      max-width:560px;     /* requested */
       margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* Overall workflow: about half-size and centered */
+    .workflow-figure{
+      max-width:560px;     /* keep consistent container */
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .workflow-figure img{
+      width:50%;           /* ~half size within the figure frame */
+      margin-left:auto;
+      margin-right:auto;
     }
 
     /* Callouts */
     .callout{
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(59,130,246,.08), rgba(124,92,255,.05));
+      border:1px solid rgba(37,99,235,.18);
+      background: linear-gradient(180deg, rgba(37,99,235,.08), rgba(124,58,237,.05));
       border-radius: var(--radius);
       padding:14px;
     }
@@ -122,19 +132,15 @@
       line-height:1.45;
     }
 
-    /* Small footer */
     footer{margin-top:22px; padding-top:18px; border-top:1px solid var(--line); color:var(--muted); text-align:center; font-size:.95rem}
 
-    /* Utility */
     ul{margin:8px 0 0; padding-left:18px}
     li{margin:6px 0}
 
-    /* Make SVG text crisp */
-    svg{max-width:100%; height:auto; display:block}
     /* Section separator */
     .sep{border:none; border-top:1px solid var(--line); margin:42px 0}
 
-    /* Two-column layout for large figures */
+    /* Two-column layout for results/motivation */
     .twocol{
       display:grid;
       grid-template-columns: 1.1fr 0.9fr;
@@ -143,16 +149,9 @@
     }
     @media (max-width: 900px){
       .twocol{grid-template-columns:1fr}
+      .workflow-figure img{width:100%}
     }
-
-    /* Paper-inspired accent colors */
-    :root{ --accent:#2563eb; --accent2:#7c3aed; }
-    h2{color:#1e3a8a}
-    .btn.primary{border-color: rgba(37,99,235,.35)}
-    .btn.secondary{border-color: rgba(124,58,237,.35)}
-    .callout{background: linear-gradient(180deg, rgba(37,99,235,.08), rgba(124,58,237,.05)); border-color: rgba(37,99,235,.18)}
-
-</style>
+  </style>
 </head>
 <body>
   <div class="wrap">
@@ -176,18 +175,18 @@
           </svg>
           Code
         </a>
-        
       </nav>
     </header>
 
     <main>
-      <!-- ===== TL;DR / Overview ===== -->
-      <section class="section">
+      <!-- ===== Overview ===== -->
+      <section>
         <h2>Overview</h2>
         <p class="muted">
-          <strong>Split-and-Conquer</strong> is a new Split Federated Learning (SFL) framework designed for <em>heterogeneous</em> environments.
-          It removes the strict client–server backpropagation dependency so clients can personalize locally and the server can train robustly under stragglers.
+          <strong>Split-and-Conquer</strong> is a Split Federated Learning (SFL) framework designed for <em>heterogeneous</em> environments.
+          It removes strict client–server backpropagation dependency so clients can personalize locally and the server can train robustly under stragglers.
         </p>
+
         <div class="callout">
           <ul class="muted" style="margin:0;">
             <li><strong>Client personalization:</strong> client-side layers are fully personalized; only a lightweight <em>shared head</em> is federated.</li>
@@ -196,11 +195,9 @@
           </ul>
         </div>
 
-        <!-- Full-width PDF (Figure 1) -->
-        <figure>
+        <figure class="workflow-figure">
           <div class="frame">
-            <!-- Upload Overall Workflow to: assets/figures/figure2.pdf -->
-            <!-- Convert paper PDF figure to PNG and upload to: assets/figures/figure2.png -->
+            <!-- Upload to: assets/figures/figure2.png -->
             <img src="assets/figures/figure2.png" alt="Overall workflow of Split-and-Conquer" />
           </div>
           <figcaption><strong>Figure 1.</strong> Overall workflow of Split-and-Conquer.</figcaption>
@@ -228,9 +225,7 @@
         <h2>Motivation</h2>
         <div class="twocol">
           <div>
-            <p class="muted">
-              Existing SFL methods suffer from two practical bottlenecks in real deployments:
-            </p>
+            <p class="muted">Existing SFL methods suffer from two practical bottlenecks in real deployments:</p>
             <ul class="muted">
               <li><strong>Weak personalization:</strong> federated aggregation on client-side layers enforces shared representations, hurting performance under non-IID data and heterogeneous devices.</li>
               <li><strong>Straggler delays:</strong> clients must wait for server-side backpropagation, so slow clients delay end-to-end progress.</li>
@@ -240,10 +235,9 @@
             </p>
           </div>
 
-          <!-- Small thumbnail on the right (Figure 2 preview) -->
-          <figure class="thumb-figure" style="margin-top:0">
+          <figure class="side-figure" style="margin-top:0">
             <div class="frame">
-              <!-- Upload teaser figure (accuracy/efficiency) to: assets/figures/figure1.png -->
+              <!-- Upload to: assets/figures/figure1.png -->
               <img src="assets/figures/figure1.png" alt="Accuracy and training-time efficiency teaser" />
             </div>
             <figcaption><strong>Figure 2.</strong> Accuracy and training-time efficiency teaser.</figcaption>
@@ -273,30 +267,19 @@
 
       <hr class="sep" />
 
-      
-        <ul class="muted">
-          <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
-          <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
-          <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
-        </ul>
-      </section>
-
-      <hr class="sep" />
-
       <!-- ===== Results ===== -->
       <section>
         <h2>Results</h2>
         <p class="muted">
           Split-and-Conquer delivers <strong>better accuracy under heterogeneity</strong> while improving <strong>end-to-end training efficiency</strong> under stragglers.
-          Below are two headline results (add the exact numbers from the paper if you want them visible on the page).
+          Below are two headline results.
         </p>
 
-        <!-- Result 1: Figure 3 (text left, figure right) -->
         <div class="twocol" style="margin-top:14px">
           <div>
             <h3>Straggler-robust training efficiency</h3>
             <p class="muted">
-              As the straggler ratio increases, conventional split FL approaches suffer large slowdowns because they require synchronized client–server backpropagation.
+              As the straggler ratio increases, conventional split FL approaches slow down due to synchronized client–server backpropagation.
               Split-and-Conquer decouples the critical path, keeping round time stable and improving normalized training-time efficiency.
             </p>
             <ul class="muted">
@@ -306,16 +289,15 @@
             </ul>
           </div>
 
-          <figure style="margin-top:0">
+          <figure class="side-figure" style="margin-top:0">
             <div class="frame">
-              <!-- Convert paper PDF figure to PNG and upload to: assets/figures/figure3.png -->
+              <!-- Upload to: assets/figures/figure3.png -->
               <img src="assets/figures/figure3.png" alt="Training time efficiency under stragglers" />
             </div>
-            <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency on SST-5: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
+            <figcaption><strong>Figure 3.</strong> Straggler-robust efficiency: end-to-end round time and normalized training-time efficiency as straggler ratio increases.</figcaption>
           </figure>
         </div>
 
-        <!-- Result 2: Figure 4 (text left, figure right) -->
         <div class="twocol" style="margin-top:18px">
           <div>
             <h3>Ablations: why it works</h3>
@@ -330,17 +312,30 @@
             </ul>
           </div>
 
-          <figure class="thumb-figure" style="margin-top:0">
+          <figure class="side-figure" style="margin-top:0">
             <div class="frame">
-              <!-- Upload Figure 4 image to: assets/figures/figure4.png -->
+              <!-- Upload to: assets/figures/figure4.png -->
               <img src="assets/figures/figure4.png" alt="Ablation studies" />
             </div>
-            <figcaption><strong>Figure 4.</strong> Ablations on SST-5: (a) server capacity, (b) replay memory size, (c) freezing shared head for compatibility.</figcaption>
+            <figcaption><strong>Figure 4.</strong> Ablations: (a) server capacity, (b) replay memory size, (c) freezing shared head for compatibility.</figcaption>
           </figure>
         </div>
       </section>
 
-    
+      <!-- ===== BibTeX (commented out for anonymous submission) =====
+      <section>
+        <h2>BibTeX</h2>
+        <pre>@inproceedings{anonymous2026split,
+  title={Split-and-Conquer: Client-Decoupled Split Federated Learning in Heterogeneous Environments},
+  author={Anonymous Authors},
+  year={2026}
+}</pre>
+      </section>
+      -->
+
+      <footer>
+        <div>Tip: place all images under <code>assets/figures/</code> so links work on GitHub Pages.</div>
+      </footer>
     </main>
   </div>
 </body>
