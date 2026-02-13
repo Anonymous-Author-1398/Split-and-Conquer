@@ -208,9 +208,9 @@
 
         <div class="callout">
           <ul class="muted" style="margin:0;">
-            <li><strong>Client personalization:</strong> client-side layers are fully personalized; only a lightweight <em>shared head</em> is federated.</li>
-            <li><strong>Client decoupling:</strong> clients compute loss &amp; update without waiting for server gradients.</li>
-            <li><strong>Straggler robustness:</strong> server trains asynchronously using a replay buffer of client embeddings.</li>
+            <li><strong>Client personalization:</strong> client-side layers are fully personalized, only a lightweight <em>shared head</em> is shared.</li>
+            <li><strong>Client decoupling:</strong> clients compute loss and update client-side layers without waiting for server gradients.</li>
+            <li><strong>Straggler robustness:</strong> server trains efficiently using a replay memory of client embeddings.</li>
           </ul>
         </div>
 
@@ -233,7 +233,7 @@
           but existing methods tightly couple client updates with server-side backpropagation.
           This coupling prevents client-specific personalization under heterogeneous environments and leads to severe training delays with stragglers.
           Split-and-Conquer decouples client-side personalization from server-side representation learning with a lightweight shared head (federated component)
-          and a server-side replay buffer for asynchronous, straggler-robust server training.
+          and a server-side replay memory for straggler-robust server training.
         </p>
       </section>
 
