@@ -332,11 +332,28 @@
           Split-and-Conquer delivers <strong>better accuracy under heterogeneity</strong> while improving <strong>end-to-end training efficiency</strong> under stragglers.
           Below are two headline results.
         </p>
+
+        <h3>Robust personalization across Diverse aata heterogeneity</h3>
+
+        <p class="muted">
+              In highly heterogeneous environments (<strong>Dirichlet α=0.05</strong>), Split-and-Conquer achieves
+              <strong>46.5%</strong> accuracy, substantially surpassing existing methods such as
+              <strong>MU-SplitFed (32.6%)</strong> and <strong>DC-SFL (29.6%)</strong>.
+              Similar gains are observed at <strong>α=0.1</strong>, where our method reaches
+              <strong>47.7%</strong> accuracy, outperforming the best baseline by over
+              <strong>11 percentage points</strong>.
+            </p>
+        
+            <p class="muted">
+              Even in homogeneous settings (<strong>α=100</strong>), Split-and-Conquer achieves the highest accuracy of
+              <strong>58.6%</strong>, demonstrating its ability to improve performance without sacrificing global
+              representation learning. These results confirm that decoupling client personalization from server-side
+              training enables more effective and robust learning across diverse client data distributions.
+            </p>
+
+        
         <div class="table-wrap">
 
-        <div class="table-caption">
-          Table 1. Test accuracy of SFL baselines and proposed solution (<span>server-side</span>)
-        </div>
       
         <table class="result-table">
           <thead>
@@ -408,36 +425,6 @@
         </table>
       
       </div>
-
-        <div class="twocol" style="margin-top:32px">
-          <div>
-            <h3>Robust personalization across Diverse aata heterogeneity</h3>
-        
-            <p class="muted">
-              Split-and-Conquer significantly improves model performance across all levels of data heterogeneity
-              by enabling true client-level personalization. As shown in the SST-5 results, our method consistently
-              outperforms all state-of-the-art SFL baselines under both heterogeneous and homogeneous settings.
-            </p>
-        
-            <p class="muted">
-              In highly heterogeneous environments (<strong>Dirichlet α=0.05</strong>), Split-and-Conquer achieves
-              <strong>46.5%</strong> accuracy, substantially surpassing existing methods such as
-              <strong>MU-SplitFed (32.6%)</strong> and <strong>DC-SFL (29.6%)</strong>.
-              Similar gains are observed at <strong>α=0.1</strong>, where our method reaches
-              <strong>47.7%</strong> accuracy, outperforming the best baseline by over
-              <strong>11 percentage points</strong>.
-            </p>
-        
-            <p class="muted">
-              Even in homogeneous settings (<strong>α=100</strong>), Split-and-Conquer achieves the highest accuracy of
-              <strong>58.6%</strong>, demonstrating its ability to improve performance without sacrificing global
-              representation learning. These results confirm that decoupling client personalization from server-side
-              training enables more effective and robust learning across diverse client data distributions.
-            </p>
-        
-          </div>
-        
-        </div>
 
         <div class="twocol" style="margin-top:14px">
           <div>
