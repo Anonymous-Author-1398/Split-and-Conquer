@@ -429,14 +429,12 @@
           <div>
             <h3>Straggler-robust training efficiency</h3>
             <p class="muted">
-              As the straggler ratio increases, conventional split FL approaches slow down due to synchronized client–server backpropagation.
-              Split-and-Conquer decouples the critical path, keeping round time stable and improving normalized training-time efficiency.
+              As the straggler ratio increases, conventional split federated learning methods suffer from longer round times and degraded training efficiency due to their reliance on tightly synchronized client–server backpropagation. 
+              Because client updates depend on server-side gradient computation, slow or delayed clients directly block overall training progress, causing inefficiencies to accumulate as system heterogeneity grows. 
+              Split-and-Conquer addresses this limitation by decoupling client-side personalization from server-side representation learning, allowing clients to update their local models independently while the server asynchronously learns from client embeddings. 
+              This decoupled design removes slow clients from the critical training path, enabling stable round times and consistently higher normalized training-time efficiency. 
+              As a result, Split-and-Conquer provides significantly more robust and scalable training performance in heterogeneous and straggler-prone federated environments.
             </p>
-            <ul class="muted">
-              <li><strong>Metric:</strong> end-to-end round time &amp; normalized training-time efficiency</li>
-              <li><strong>Setting:</strong> varying straggler ratio (e.g., 0–50%)</li>
-              <li><strong>Takeaway:</strong> robust efficiency even with many slow clients</li>
-            </ul>
           </div>
           
           <figure class="side-figure" style="margin-top:0">
