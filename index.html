@@ -318,7 +318,7 @@
         <h3>What’s new?</h3>
         <ul class="muted">
           <li><strong>Compatibility-aware client update:</strong> before training the full local model, each client first updates only the personalized layers while freezing the aggregated shared head.</li>
-          <li><strong>Asynchronous server training:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
+          <li><strong>Server training with replay memory:</strong> clients send latent embeddings; the server stores them in a replay memory and trains a large server-side model independent of client availability.</li>
           <li><strong>Decoupled critical path:</strong> removing server-to-client backpropagation lets client updates and server updates run in parallel.</li>
         </ul>
       </section>
@@ -327,13 +327,12 @@
 
       <!-- ===== Results ===== -->
       <section>
-        <h2>Results</h2>
+        <h2>Results on SST-5 dataset with Llama-3.2-3B model</h2>
         <p class="muted">
           Split-and-Conquer delivers <strong>better accuracy under heterogeneity</strong> while improving <strong>end-to-end training efficiency</strong> under stragglers.
-          Below are two headline results.
         </p>
 
-        <h3>Robust personalization across Diverse aata heterogeneity</h3>
+        <h3>Robust personalization across diverse data heterogeneity</h3>
 
         <p class="muted">
               In highly heterogeneous environments (<strong>Dirichlet α=0.05</strong>), Split-and-Conquer achieves
